@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
+const { AllRoutes } = require("./routes/router");
 
 class Application {
     #app = express();
@@ -31,7 +32,7 @@ class Application {
     }
 
     createRoutes(){
-
+        this.#app.use(AllRoutes);
     }
 
     createServer(){
