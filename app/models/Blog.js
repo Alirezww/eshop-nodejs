@@ -7,9 +7,9 @@ const BlogSchema = new mongoose.Schema({
     tags : { type : [String], default : []},
     category : { type : mongoose.Types.ObjectId, required : true },
     comments : { type : [], default : [] },
-    likes : { type : mongoose.Types.ObjectId, default : []},
-    dislikes : { type : mongoose.Types.ObjectId, default : []},
-    bookmark : { type : mongoose.Types.ObjectId, default : []}
+    likes : { type : [mongoose.Types.ObjectId], default : []},
+    dislikes : { type : [mongoose.Types.ObjectId], default : []},
+    bookmark : { type : [mongoose.Types.ObjectId], default : []}
 })
 
 const BlogModel = mongoose.model("Blog", BlogSchema);
