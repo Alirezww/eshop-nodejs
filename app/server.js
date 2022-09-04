@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const morgan = require("morgan");
 const path = require("path");
 const { AllRoutes } = require("./routes/router");
+const createError = require("http-errors");
 
 class Application {
     #app = express();
@@ -59,21 +60,19 @@ class Application {
 
     errorHandling(){
         this.#app.use((req, res, next) => {
-            return res.status(404).json({
-                status : 404,
-                success : false,
-                message : "صفحه مورد نظر پیدا نشد."
-            });
+            next(createError.NotFound("صفحه موردنظر یافت نشد!"))
         });
 
         this.#app.use((error, req, res, next) => {
-            const status = error?.status || 500;
-            const message = error?.message || "InternalServerError";
+            const serverError =createError.InternalServerError();
+            const statusCode = error?.status || serverError.status;
+            const message = error?.message || serverError.message;
 
-            return res.status(status).json({
-                status,
-                success : false,
-                message
+            return res.status(statusCode).json({
+                errors : {
+                    statusCode,
+                    message
+                }
             })
         })
     }
