@@ -14,7 +14,8 @@ const userSchema = new mongoose.Schema({
     bills : { type : [], default : [] },
     roles : {type : [String] , default : ["USER"]},
     discount : { type : Number, default : 0 },
-    birthday : { type : String }
+    birthday : { type : String },
+    last_login : { type : Date }
 })
 
 const UserModel = mongoose.model("User", userSchema);
