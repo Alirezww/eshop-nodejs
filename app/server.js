@@ -1,12 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const morgan = require("morgan");
 const path = require("path");
 const { AllRoutes } = require("./routes/router");
 
 class Application {
     #app = express();
     #DB_URI;
-    #PORT
+    #PORT;
     constructor(PORT, DB_URI){
         this.#DB_URI = DB_URI;
         this.#PORT = PORT;
@@ -16,12 +17,13 @@ class Application {
         this.createRoutes();
         this.errorHandling();
         this.createServer();
-    }
+    };
 
     configApplication(){
+        this.#app.use(morgan("dev"));
         this.#app.use(express.json({  }));
         this.#app.use(express.urlencoded({ extended : false }));
-        this.#app.use(express.static(path.join(__dirname, "..",  "public")))
+        this.#app.use(express.static(path.join(__dirname, "..",  "public")));
     }
 
     connectToMongoDB(){
