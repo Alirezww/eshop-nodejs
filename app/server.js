@@ -31,6 +31,19 @@ class Application {
             if(!error) return console.log("MongoDB connected succesfully...");
             return console.log("falied to connect MongoDB");
         })
+
+        mongoose.connection.on("connected", () => {
+            console.log("mongoose connected to DB.")
+        })
+
+        mongoose.connection.on("disconnected", () => {
+            console.log("mongoose disconnected to DB.")
+        })
+
+        process.on("SIGINT", async() => {
+            await mongoose.connection.close();
+            process.exit(0);
+        })
     }
 
     createRoutes(){
