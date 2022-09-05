@@ -41,8 +41,8 @@ class UserAuthController {
             const user = await UserModel.findOne({ mobile });
             if(!user) throw createHttpError.NotFound("کاربر یافت نشد!!");
             if(user.otp.code != code) throw createHttpError.Unauthorized("کد ارسال شده صحیح نمی باشد.");
-            const now = new Date().now();
-            if(user.otp.expiresIn < now) throw createHttpError.Unauthorized("کد وارد شده منقضی شده است.");
+            const now = new Date().getTime();
+            if(+user.otp.expiresIn < now) throw createHttpError.Unauthorized("کد وارد شده منقضی شده است.");
 
             const accessToken = await SignAccessToken(user._id);
 
@@ -56,8 +56,6 @@ class UserAuthController {
             next(err)
         }
     }
-
-    
 
     async saveUser(mobile, code){
         let otp = {
@@ -79,7 +77,6 @@ class UserAuthController {
 
     async checkExistUser(mobile){
         const user = await UserModel.findOne({ mobile });
-        console.log(!!user)
         return !!user
     }
 

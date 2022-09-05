@@ -1,24 +1,29 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema({
-    first_name : {type : String , trim : true},
-    last_name : {type : String, trim : true},
-    username : {type : String , unique : true, trim : true, lowercase : true},
-    mobile : {type : String ,  unique : true},
-    email : {type : String , lowercase : true, unique : true, trim : true},
+const UserSchema = new mongoose.Schema({
+    first_name : {type : String},
+    last_name : {type : String},
+    username : {type : String, lowercase : true},
+    mobile : {type : String, required : true, unique: true},
+    email : {type : String, lowercase : true},
     password : {type : String},
-    otp : { type : Object, default : {
-        code : "",
+    otp : {type : Object, default : {
+        code : 0,
         expiresIn : 0
     }},
-    bills : { type : [], default : [] },
-    roles : {type : [String] , default : ["USER"]},
-    discount : { type : Number, default : 0 },
-    birthday : { type : String },
-    last_login : { type : Date }
-})
+    bills : {type : [], default : []},
+    discount : {type : Number, default : 0},
+    birthday : {type : String},
+    last_login : { type : Date },
+    role : {type : String, default : "USER"},
+}, {
+    timestamps : true,
+    toJSON : {
+        virtuals : true
+    }
+});
 
 
 module.exports = {
-    UserModel : mongoose.model("user", userSchema)
+    UserModel : mongoose.model("user", UserSchema)
 }

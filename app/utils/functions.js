@@ -1,6 +1,6 @@
 const createHttpError = require("http-errors");
 const JWT = require("jsonwebtoken");
-const UserModel = require("../models/User");
+const { UserModel } = require("../models/User");
 
 const randomNumberGenerator = () => {
     return Math.floor((Math.random() * 90000) + 10000)
@@ -8,6 +8,7 @@ const randomNumberGenerator = () => {
 
 const SignAccessToken = (userID) => {
     return new Promise(async (resolve, reject) => {
+
         const user = await UserModel.findById(userID);
 
         const payload = {
