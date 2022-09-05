@@ -3,7 +3,7 @@ const autoBind = require("auto-bind");
 
 const { randomNumberGenerator } = require("../../../../utils/functions");
 const UserModel = require("../../../../models/User");
-const { authSchema } = require("../../../validators/user/auth");
+const { checkOtpSchema, getOtpSchema } = require("../../../validators/user/auth");
 const { EXPIRES_IN, USER_ROLE } = require("../../../../utils/constans");
 
 class UserAuthController {
@@ -12,9 +12,9 @@ class UserAuthController {
         autoBind(this)
     }
 
-    async login(req, res, next){
+    async getOtp(req, res, next){
         try{
-            await authSchema.validateAsync(req.body);
+            await getOtpSchema.validateAsync(req.body);
             const { mobile } = req.body
             const code = randomNumberGenerator();
             const result = await this.saveUser(mobile, code);
@@ -28,7 +28,15 @@ class UserAuthController {
                 }
             })
         }catch(error){
-            next(createHttpError.BadRequest(error.message));
+            next(err);
+        }
+    }
+
+    async checkOtp(req, res, next){
+        try{
+            const { mobile, code } = req.body
+        }catch(err){
+            next(err)
         }
     }
 
