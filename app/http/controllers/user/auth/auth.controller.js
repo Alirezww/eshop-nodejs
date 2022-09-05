@@ -4,7 +4,7 @@ const autoBind = require("auto-bind");
 const { randomNumberGenerator, SignAccessToken } = require("../../../../utils/functions");
 const { UserModel } = require("../../../../models/User");
 const { checkOtpSchema, getOtpSchema } = require("../../../validators/user/auth");
-const { EXPIRES_IN, USER_ROLE } = require("../../../../utils/constans");
+const { ACCESS_TOKEN_SECRET_KEY, USER_ROLE } = require("../../../../utils/constans");
 
 class UserAuthController {
 
@@ -60,7 +60,7 @@ class UserAuthController {
     async saveUser(mobile, code){
         let otp = {
             code,
-            expiresIn : EXPIRES_IN
+            expiresIn : ACCESS_TOKEN_SECRET_KEY
         };
 
         const result = await this.checkExistUser(mobile);

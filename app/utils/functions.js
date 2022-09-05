@@ -1,7 +1,7 @@
 const createHttpError = require("http-errors");
 const JWT = require("jsonwebtoken");
 const { UserModel } = require("../models/User");
-const { SECRET_KEY } = require("./constans");
+const { ACCESS_TOKEN_SECRET_KEY } = require("./constans");
 
 const randomNumberGenerator = () => {
     return Math.floor((Math.random() * 90000) + 10000)
@@ -21,7 +21,7 @@ const SignAccessToken = (userID) => {
             expiresIn : "1h"
         };
 
-        JWT.sign(payload, secret, options, (err, token) => {
+        JWT.sign(payload, ACCESS_TOKEN_SECRET_KEY, options, (err, token) => {
             if(err) reject(createHttpError.InternalServerError("خطای سرور پیش آمده است لطفا دوباره بعدا امتحان کنید."));
             resolve(token)
         })
