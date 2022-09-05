@@ -13,15 +13,14 @@ const SignAccessToken = (userID) => {
         const user = await UserModel.findById(userID);
 
         const payload = {
-            mobile : user.mobile,
-            userID : user._id 
+            mobile : user.mobile
         };
-        const secret = SECRET_KEY;
+        const secret = ACCESS_TOKEN_SECRET_KEY;
         const options = {
             expiresIn : "1h"
         };
 
-        JWT.sign(payload, ACCESS_TOKEN_SECRET_KEY, options, (err, token) => {
+        JWT.sign(payload, secret, options, (err, token) => {
             if(err) reject(createHttpError.InternalServerError("خطای سرور پیش آمده است لطفا دوباره بعدا امتحان کنید."));
             resolve(token)
         })
