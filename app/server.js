@@ -4,7 +4,8 @@ const morgan = require("morgan");
 const path = require("path");
 const createError = require("http-errors");
 const swaggerUI = require("swagger-ui-express");
-const swaggerJSDoc = require("swagger-jsdoc")
+const swaggerJSDoc = require("swagger-jsdoc");
+const cors = require("cors");
 
 const { AllRoutes } = require("./routes/router");
 
@@ -25,6 +26,7 @@ class Application {
     };
 
     configApplication(){
+        this.#app.use(cors())
         this.#app.use(morgan("dev"));
         this.#app.use(express.json({  }));
         this.#app.use(express.urlencoded({ extended : false }));
