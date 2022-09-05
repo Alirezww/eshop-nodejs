@@ -1,6 +1,7 @@
 const createHttpError = require("http-errors");
 const JWT = require("jsonwebtoken");
 const { UserModel } = require("../models/User");
+const { SECRET_KEY } = require("./constans");
 
 const randomNumberGenerator = () => {
     return Math.floor((Math.random() * 90000) + 10000)
@@ -15,7 +16,7 @@ const SignAccessToken = (userID) => {
             mobile : user.mobile,
             userID : user._id 
         };
-        const secret = "b042b83352360176a5e913215113f910";
+        const secret = SECRET_KEY;
         const options = {
             expiresIn : "1h"
         };

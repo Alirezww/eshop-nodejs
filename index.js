@@ -1,3 +1,5 @@
 const Application = require("./app/server");
+const dotenv = require("dotenv");
 
-new Application(3000, "mongodb://localhost:27017/nodeStoreDB")
+dotenv.config();
+new Application(3000, process.env.MONGO_URI);
