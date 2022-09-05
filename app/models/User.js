@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
     password : {type : String , required : true},
     otp : { type : Object, default : {
         code : "",
-        expires : 0
+        expiresIn : 0
     }},
     bills : { type : [], default : [] },
     roles : {type : [String] , default : ["USER"]},
