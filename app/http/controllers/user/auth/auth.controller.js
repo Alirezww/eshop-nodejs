@@ -1,9 +1,9 @@
 const createHttpError = require("http-errors");
 const autoBind = require("auto-bind");
 
-const { randomNumberGenerator } = require("../../../../utils/functions");
-const UserModel = require("../../../../models/User");
-const { checkOtpSchema, getOtpSchema } = require("../../../validators/user/auth");
+const { randomNumberGenerator, } = require("../../../../utils/functions");
+const { UserModel } = require("../../../../models/User");
+const {  getOtpSchema } = require("../../../validators/user/auth");
 const { EXPIRES_IN, USER_ROLE } = require("../../../../utils/constans");
 
 class UserAuthController {
@@ -18,7 +18,8 @@ class UserAuthController {
             const { mobile } = req.body
             const code = randomNumberGenerator();
             const result = await this.saveUser(mobile, code);
-            if(!result) createHttpError.Unauthorized("ورود شما انجام نشد.")
+
+            if(!result) throw createHttpError.Unauthorized("ورود شما انجام نشد.")
             return res.status(200).json({
                 data : {
                     statusCode : 200,
@@ -28,23 +29,7 @@ class UserAuthController {
                 }
             })
         }catch(error){
-            next(err);
-        }
-    }
-
-    async checkOtp(req, res, next){
-        try{
-            await checkOtpSchema.validateAsync(req.body);
-            const { mobile, code } = req.body;
-
-            const user = await UserModel.findOne({ mobile });
-            if(!user) createHttpError.NotFound("کاربر یافت نشد!!");
-            if(user.otp.code != code) createHttpError.Unauthorized("کد ارسال شده صحیح نمی باشد.");
-            const now = new Date().now();
-            if(user.otp.expiresIn < now) createHttpError.Unauthorized("کد وارد شده منقضی شده است.");
-
-        }catch(err){
-            next(err)
+            next(error);
         }
     }
 
@@ -54,8 +39,7 @@ class UserAuthController {
             expiresIn : EXPIRES_IN
         };
 
-        const result = this.checkExistUser(mobile);
-
+        const result = await this.checkExistUser(mobile);
         if(result){
             return (await this.updateUser(mobile, {otp}))
         }
@@ -69,6 +53,7 @@ class UserAuthController {
 
     async checkExistUser(mobile){
         const user = await UserModel.findOne({ mobile });
+        console.log(!!user)
         return !!user
     }
 

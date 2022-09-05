@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
     username : {type : String , unique : true, trim : true, lowercase : true},
     mobile : {type : String ,  unique : true},
     email : {type : String , lowercase : true, unique : true, trim : true},
-    password : {type : String , required : true},
+    password : {type : String},
     otp : { type : Object, default : {
         code : "",
         expiresIn : 0
@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema({
     last_login : { type : Date }
 })
 
-const UserModel = mongoose.model("User", userSchema);
 
-module.exports = UserModel
+module.exports = {
+    UserModel : mongoose.model("user", userSchema)
+}

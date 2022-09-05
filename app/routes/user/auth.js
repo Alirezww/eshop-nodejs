@@ -11,7 +11,7 @@ const router = require("express").Router();
 
 /**
  * @swagger
- * /user/login:
+ * /user/get-otp:
  *      post:
  *          summary: login user in userpanel with phone number
  *          tags : [User-Authentication]
@@ -32,7 +32,8 @@ const router = require("express").Router();
  *              500:
  *                  description : Internal Server Error
  */
-router.post("/login", UserAuthController.getOtp);
+router.post("/get-otp", UserAuthController.getOtp);
+
 
 module.exports = {
     userAuthRoutes : router
