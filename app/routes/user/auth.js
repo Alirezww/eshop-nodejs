@@ -5,8 +5,8 @@ const router = require("express").Router();
 /**
  * @swagger
  * tags:
- *      name: AuthRoutes
- *      description: routes for login and register
+ *      name: User-Authentication
+ *      description: authentication section
  */
 
 /**
@@ -14,7 +14,7 @@ const router = require("express").Router();
  * /user/login:
  *      post:
  *          summary: login user in userpanel with phone number
- *          tags : [AuthRoutes]
+ *          tags : [User-Authentication]
  *          description: one time password (OTP)
  *          parameters:
  *          -   name: mobile
