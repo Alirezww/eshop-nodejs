@@ -34,6 +34,37 @@ const router = require("express").Router();
  */
 router.post("/get-otp", UserAuthController.getOtp);
 
+/**
+ * @swagger
+ * /user/check-otp:
+ *      post:
+ *          tags : [User-Authentication]
+ *          summary: check otp value in user controller
+ *          description: check otp with code, mobile, expires date
+ *          parameters:
+ *          -   name: mobile
+ *              description: IRI-fa phone number
+ *              in: formData
+ *              type: string
+ *              required: true
+ * 
+ *          -   name: code
+ *              description: enter SMS code recieved
+ *              in: formData
+ *              type: string
+ *              required: true
+ * 
+ *          responses:
+ *              201:
+ *                  description : success
+ *              400:
+ *                  description : Bad Request
+ *              401:
+ *                  description : Unauthorization
+ *              500:
+ *                  description : Internal Server Error
+ */
+router.post("/check-otp", UserAuthController.checkOtp);
 
 module.exports = {
     userAuthRoutes : router

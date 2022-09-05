@@ -1,9 +1,9 @@
 const createHttpError = require("http-errors");
 const autoBind = require("auto-bind");
 
-const { randomNumberGenerator, } = require("../../../../utils/functions");
+const { randomNumberGenerator, SignAccessToken } = require("../../../../utils/functions");
 const { UserModel } = require("../../../../models/User");
-const {  getOtpSchema } = require("../../../validators/user/auth");
+const { checkOtpSchema, getOtpSchema } = require("../../../validators/user/auth");
 const { EXPIRES_IN, USER_ROLE } = require("../../../../utils/constans");
 
 class UserAuthController {
@@ -32,6 +32,32 @@ class UserAuthController {
             next(error);
         }
     }
+
+    async checkOtp(req, res, next){
+        try{
+            await checkOtpSchema.validateAsync(req.body);
+            const { mobile, code } = req.body;
+
+            const user = await UserModel.findOne({ mobile });
+            if(!user) throw createHttpError.NotFound("کاربر یافت نشد!!");
+            if(user.otp.code != code) throw createHttpError.Unauthorized("کد ارسال شده صحیح نمی باشد.");
+            const now = new Date().now();
+            if(user.otp.expiresIn < now) throw createHttpError.Unauthorized("کد وارد شده منقضی شده است.");
+
+            const accessToken = await SignAccessToken(user._id);
+
+            return res.status(200).json({
+                data : {
+                    accessToken
+                }
+            })
+
+        }catch(err){
+            next(err)
+        }
+    }
+
+    
 
     async saveUser(mobile, code){
         let otp = {
