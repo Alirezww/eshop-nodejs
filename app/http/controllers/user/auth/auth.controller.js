@@ -34,7 +34,15 @@ class UserAuthController {
 
     async checkOtp(req, res, next){
         try{
-            const { mobile, code } = req.body
+            await checkOtpSchema.validateAsync(req.body);
+            const { mobile, code } = req.body;
+
+            const user = await UserModel.findOne({ mobile });
+            if(!user) createHttpError.NotFound("کاربر یافت نشد!!");
+            if(user.otp.code != code) createHttpError.Unauthorized("کد ارسال شده صحیح نمی باشد.");
+            const now = new Date().now();
+            if(user.otp.expiresIn < now) createHttpError.Unauthorized("کد وارد شده منقضی شده است.");
+
         }catch(err){
             next(err)
         }
