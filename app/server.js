@@ -2,13 +2,17 @@ const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const path = require("path");
-const { AllRoutes } = require("./routes/router");
 const createError = require("http-errors");
+const swaggerUI = require("swagger-ui-express");
+const swaggerJSDoc = require("swagger-jsdoc")
+
+const { AllRoutes } = require("./routes/router");
 
 class Application {
     #app = express();
     #DB_URI;
     #PORT;
+
     constructor(PORT, DB_URI){
         this.#DB_URI = DB_URI;
         this.#PORT = PORT;
@@ -25,6 +29,22 @@ class Application {
         this.#app.use(express.json({  }));
         this.#app.use(express.urlencoded({ extended : false }));
         this.#app.use(express.static(path.join(__dirname, "..",  "public")));
+
+        this.#app.use("/api-doc", swaggerUI.serve, swaggerUI.setup(swaggerJSDoc({
+            swaggerDefinition : {
+                info : {
+                    title : "Alireza Store",
+                    version : "2.0.0",
+                    description : "اولین وبسایت فروش اکانت بازی ها"
+                },
+                servers : [
+                    {
+                       url : "http://localhost:3000" 
+                    }
+                ]
+            },
+            apis : ["./app/routes/**/*.js"]
+        })));
     }
 
     connectToMongoDB(){
