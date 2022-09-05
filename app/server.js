@@ -35,13 +35,18 @@ class Application {
                 info : {
                     title : "Alireza Store",
                     version : "2.0.0",
-                    description : "اولین وبسایت فروش اکانت بازی ها"
+                    description : "اولین وبسایت فروش اکانت بازی ها",
+                    contact : {
+                        name : "Alireza Talebi",
+                        email : "alirezatlb45@gmail.com",
+                        url : "https://alirezatalbi.com"
+                    }
                 },
                 servers : [
                     {
                        url : "http://localhost:3000" 
                     }
-                ]
+                ],
             },
             apis : ["./app/routes/**/*.js"]
         })));
