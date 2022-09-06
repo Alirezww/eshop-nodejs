@@ -31,7 +31,7 @@ class Application {
         this.#app.use(express.json({  }));
         this.#app.use(express.urlencoded({ extended : false }));
         this.#app.use(express.static(path.join(__dirname, "..",  "public")));
-
+        
         this.#app.use("/api-doc", swaggerUI.serve, swaggerUI.setup(swaggerJSDoc({
             swaggerDefinition : {
                 info : {
