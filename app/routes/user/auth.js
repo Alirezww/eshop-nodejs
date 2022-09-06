@@ -66,6 +66,27 @@ router.post("/get-otp", UserAuthController.getOtp);
  */
 router.post("/check-otp", UserAuthController.checkOtp);
 
+/**
+ * @swagger
+ * /user/refresh-token:
+ *      post:
+ *          tags: [User-Authentication]
+ *          summary: send refresh token for get new access and refresh token
+ *          description: fresh token
+ *          parameters:
+ *          -   name: refreshToken
+ *              in: formData
+ *              required: true
+ *              type: string 
+ *          responses:
+ *              200:
+ *                  description: success
+ *              500:
+ *                  description: InternalServerError
+ */
+router.post("/refresh-token", UserAuthController.refreshToken);
+
+
 module.exports = {
     userAuthRoutes : router
 }

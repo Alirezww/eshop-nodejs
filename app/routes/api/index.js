@@ -22,6 +22,7 @@ const router = require("express").Router();
  *              in: header
  *              type: string
  *              required: false
+ *              example: Bearer YourToken....
  * 
  *      responses:
  *          200:
