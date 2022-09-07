@@ -6,7 +6,7 @@ const { ACCESS_TOKEN_SECRET_KEY } = require("../../utils/constans");
 
 const verifyAccessToken = (req, res, next) => {
     const headers = req.headers;
-    const [bearer, token] = headers?.["access-token"].split(" ") || [];
+    const [bearer, token] = headers?.["access-token"]?.split(" ") || [];
 
     if(token && ["Bearer", "bearer"].includes(bearer)){
 
