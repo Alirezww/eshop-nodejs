@@ -4,7 +4,7 @@ const autoBind = require("auto-bind");
 const { randomNumberGenerator, SignAccessToken, verifyRefreshToken, SignRefreshToken } = require("../../../../utils/functions");
 const { UserModel } = require("../../../../models/User");
 const { checkOtpSchema, getOtpSchema } = require("../../../validators/user/auth");
-const { ACCESS_TOKEN_SECRET_KEY, ROLES } = require("../../../../utils/constans");
+const { ROLES } = require("../../../../utils/constans");
 
 class UserAuthController {
 
