@@ -30,7 +30,17 @@ router.get("/password-hash/:password", (req, res, next) => {
     return res.send(bcrypt.hashSync(password, salt));
 });
 
-  
+
+/**
+ * @swagger
+ * /developer/random-number:
+ *      get:
+ *          tags: [DeveloperRoutes]
+ *          summary: get random number
+ *          responses:
+ *              200:
+ *                  description: success   
+ */       
 router.get("/random-number", (req, res, next) => {
     return res.send(randomNumberGenerator().toString());
 });
