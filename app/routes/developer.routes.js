@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
+const { randomNumberGenerator } = require("../utils/functions");
 
 /**
  * @swagger
@@ -23,12 +24,16 @@ const bcrypt = require("bcrypt");
  *              200:
  *                  description: success   
  */       
-
 router.get("/password-hash/:password", (req, res, next) => {
     const password = req.params.password;
     const salt = bcrypt.genSaltSync(8);
     return res.send(bcrypt.hashSync(password, salt));
-})
+});
+
+  
+router.get("/random-number", (req, res, next) => {
+    return res.send(randomNumberGenerator().toString());
+});
 
 module.exports = {
     DeveloperRoutes : router
