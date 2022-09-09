@@ -43,9 +43,6 @@ const SignRefreshToken = (userID) => {
 
         JWT.sign(payload, secret, options, async(err, token) => {
             if(err) reject(createHttpError.InternalServerError("خطای سرور پیش آمده است لطفا دوباره بعدا امتحان کنید."));
-            console.log(userID);
-            console.log(365*24*60*60,)
-            console.log(token)
             await redisClient.SETEX(String(userID), (365 * 24 * 60 * 60), token);
             resolve(token)
         })
