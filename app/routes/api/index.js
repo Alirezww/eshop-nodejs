@@ -1,6 +1,14 @@
 const { HomeController } = require("../../http/controllers/api/home.controller");
 const { verifyAccessToken } = require("../../http/middlewares/verifyAccessToken");
 
+const redisClient = require("../../utils/init_redis");
+
+(async() => {
+    await redisClient.set("key", "value");
+    const value = await redisClient.get("key");
+    console.log(value)
+})()
+
 const router = require("express").Router();
 /**
  * @swagger
