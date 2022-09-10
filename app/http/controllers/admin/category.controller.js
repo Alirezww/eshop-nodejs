@@ -2,7 +2,6 @@ const Controller = require("../controller");
 const CategoryModel = require("../../../models/Category");
 const createHttpError = require("http-errors");
 const { addCategorySchema } = require("../../validators/admin/category.schema");
-const category = require("../../../routes/admin/category");
 
 class CategoryController extends Controller {
     async addCategory(req, res, next){
@@ -59,12 +58,38 @@ class CategoryController extends Controller {
 
     async getAllCategories(req, res, next){
         try{
+            // const categories = await CategoryModel.aggregate([
+            //     {
+            //         $lookup : {
+            //             from: "categories",
+            //             localField: "_id",
+            //             foreignField: "parent",
+            //             as: "children"
+            //         }
+            //     },
+            //     {
+            //         $project : { 
+            //             __v: 0,
+            //             "children.__v": 0,
+            //             "children.parent" : 0
+            //         }
+            //     },
+            //     {
+            //         $match : {
+            //             parent : undefined
+            //         }
+            //     }
+            // ]);
+
             const categories = await CategoryModel.aggregate([
                 {
-                    $lookup : {
+                    $graphLookup: {
                         from: "categories",
-                        localField: "_id",
-                        foreignField: "parent",
+                        startWith: "$_id",
+                        connectFromField: "_id",
+                        connectToField: "parent",
+                        maxDepth: 5,
+                        depthField: "depth",
                         as: "children"
                     }
                 },
@@ -74,8 +99,13 @@ class CategoryController extends Controller {
                         "children.__v": 0,
                         "children.parent" : 0
                     }
+                },
+                {
+                    $match: {
+                        parent: undefined
+                    }
                 }
-            ]);
+            ])
 
             return res.status(200).json({
                 data: {
