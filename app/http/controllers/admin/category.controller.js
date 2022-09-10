@@ -1,7 +1,7 @@
 const Controller = require("../controller");
 const CategoryModel = require("../../../models/Category");
 const createHttpError = require("http-errors");
-const { addCategorySchema } = require("../../validators/admin/category.schema");
+const { addCategorySchema, editCategorySchema } = require("../../validators/admin/category.schema");
 const { default: mongoose } = require("mongoose");
 
 class CategoryController extends Controller {
@@ -53,7 +53,21 @@ class CategoryController extends Controller {
     }
     async editCategory(req, res, next){
         try{
-            
+            await editCategorySchema.validateAsync(req.body);
+            const { id } = req.params;
+            const { title } = req.body;
+
+            await this.checkExistsCategory(id);
+
+            const updateCategoryResult = await CategoryModel.updateOne({ _id: id }, { $set: { title } });
+            if(updateCategoryResult.modifiedCount == 0) throw createHttpError.BadRequest("دسته بندی موردنظر با موفقیت ویرایش نشد!!");
+
+            return res.status(200).json({
+                data: {
+                    statusCode: 200,
+                    message: "دسته بندی موردنظر با موفقیت ویرایش شد."
+                }
+            })
         }catch(err){
             next(err);
         };
