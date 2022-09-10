@@ -131,6 +131,9 @@ class CategoryController extends Controller {
             const categories = await CategoryModel.aggregate([
                 {
                     $match: {}
+                },
+                {
+                    $project: { __v : 0}
                 }
             ]);
 
