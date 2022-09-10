@@ -87,38 +87,42 @@ class CategoryController extends Controller {
             //     }
             // ]);
 
-            const categories = await CategoryModel.aggregate([
-                {
-                    $graphLookup: {
-                        from: "categories",
-                        startWith: "$_id",
-                        connectFromField: "_id",
-                        connectToField: "parent",
-                        maxDepth: 5,
-                        depthField: "depth",
-                        as: "children"
-                    }
-                },
-                {
-                    $project : { 
-                        __v: 0,
-                        "children.__v": 0,
-                        "children.parent" : 0
-                    }
-                },
-                {
-                    $match: {
-                        parent: undefined
-                    }
-                }
-            ])
+            // const categories = await CategoryModel.aggregate([
+            //     {
+            //         $graphLookup: {
+            //             from: "categories",
+            //             startWith: "$_id",
+            //             connectFromField: "_id",
+            //             connectToField: "parent",
+            //             maxDepth: 5,
+            //             depthField: "depth",
+            //             as: "children"
+            //         }
+            //     },
+            //     {
+            //         $project : { 
+            //             __v: 0,
+            //             "children.__v": 0,
+            //             "children.parent" : 0
+            //         }
+            //     },
+            //     {
+            //         $match: {
+            //             parent: undefined
+            //         }
+            //     }
+            // ])
+
+            const categories = await CategoryModel.find({ parent: undefined }, { __v: 0 });
 
             return res.status(200).json({
                 data: {
+                    statusCode: 200,
                     categories
                 }
             })
         }catch(err){
+            console.log(err)
             next(err);
         };
     }
