@@ -105,6 +105,30 @@ router.get("/children/:parent", CategoryController.getChildOfParents);
  */
 router.delete("/remove/:id", CategoryController.removeCategory);
 
+ /**
+ * @swagger
+ * /admin/category/update/{id}:
+ *      patch:
+ *          summary: update category title field by id
+ *          tags: [Admin-Panel]
+ *          parameters:
+ *              -   in: path
+ *                  name: id
+ *                  type: string
+ *                  required: true
+ * 
+ *              -   in: formData
+ *                  name: title
+ *                  type: string
+ *                  required: true
+ *          responses:
+ *              200:
+ *                  description: success
+ *              500:
+ *                  description: InternalServerError
+ */
+router.patch("/update/:id", CategoryController.editCategory);
+
 /**
  * @swagger
  * /admin/category/{id}:

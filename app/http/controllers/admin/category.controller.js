@@ -48,7 +48,7 @@ class CategoryController extends Controller {
     }
     async checkExistsCategory(id){
         const category =  await CategoryModel.findById(id);
-        if(!category) throw createHttpError.NotFound("دسته بندی موردنظر برای حذف کردن پیدا نشد.");
+        if(!category) throw createHttpError.NotFound("دسته بندی موردنظر برای پیدا نشد.");
         return category;
     }
     async editCategory(req, res, next){
