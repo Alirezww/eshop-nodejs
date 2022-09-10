@@ -30,7 +30,7 @@ class CategoryController extends Controller {
             next(err);
         };
     }
-
+ 
     async editCategory(req, res, next){
         try{
             
@@ -57,7 +57,13 @@ class CategoryController extends Controller {
 
     async getAllParents(req, res, next){
         try{
-            
+            const parents = await CategoryModel.find({ parent : undefined }, { __v: 0 });
+
+            return res.status(200).json({
+                data:{
+                    parents
+                }
+            })
         }catch(err){
             next(err);
         };
@@ -65,7 +71,15 @@ class CategoryController extends Controller {
 
     async getChildOfParents(req, res, next){
         try{
-            
+            const { parent } = req.params;
+
+            const children = await CategoryModel.find({ parent }, { __v: 0, parent : 0 });
+
+            return res.status(200).json({
+                data: {
+                    children
+                }
+            })
         }catch(err){
             next(err);
         };
