@@ -7,7 +7,7 @@ const router = require("express").Router();
  * /admin/category/add:
  *      post:
  *          summary: create new category
- *          tags: [Admin-Panel]
+ *          tags: [Category-AdminPanel]
  *          parameters:
  *              -   in: formData
  *                  name: title
@@ -30,7 +30,7 @@ router.post("/add", CategoryController.addCategory);
  * /admin/category/all:
  *      get:
  *          summary: get all categories
- *          tags: [Admin-Panel]
+ *          tags: [Category-AdminPanel]
  *          responses:
  *              200:
  *                  description: success
@@ -44,7 +44,7 @@ router.get("/all", CategoryController.getAllCategories);
  * /admin/category/list-all:
  *      get:
  *          summary: get all categories without population and nested distructure
- *          tags: [Admin-Panel]
+ *          tags: [Category-AdminPanel]
  *          responses:
  *              200:
  *                  description: success
@@ -58,7 +58,7 @@ router.get("/list-all", CategoryController.getAllCategoriesWithoutPopulation);
  * /admin/category/parents:
  *      get:
  *          summary: get all parent categories
- *          tags: [Admin-Panel]
+ *          tags: [Category-AdminPanel]
  *          responses:
  *              200:
  *                  description: success
@@ -72,7 +72,7 @@ router.get("/parents", CategoryController.getAllParents);
  * /admin/category/children/{parent}:
  *      get:
  *          summary: get all childs of parent category
- *          tags: [Admin-Panel]
+ *          tags: [Category-AdminPanel]
  *          parameters:
  *              -   in: path
  *                  name: parent
@@ -91,7 +91,7 @@ router.get("/children/:parent", CategoryController.getChildOfParents);
  * /admin/category/remove/{id}:
  *      delete:
  *          summary: remove category by id
- *          tags: [Admin-Panel]
+ *          tags: [Category-AdminPanel]
  *          parameters:
  *              -   in: path
  *                  name: id
@@ -110,7 +110,7 @@ router.delete("/remove/:id", CategoryController.removeCategory);
  * /admin/category/update/{id}:
  *      patch:
  *          summary: update category title field by id
- *          tags: [Admin-Panel]
+ *          tags: [Category-AdminPanel]
  *          parameters:
  *              -   in: path
  *                  name: id
@@ -134,7 +134,7 @@ router.patch("/update/:id", CategoryController.editCategory);
  * /admin/category/{id}:
  *      get:
  *          summary: get category by id
- *          tags: [Admin-Panel]
+ *          tags: [Category-AdminPanel]
  *          parameters:
  *              -   in: path
  *                  name: id
