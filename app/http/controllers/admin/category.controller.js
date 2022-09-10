@@ -2,6 +2,7 @@ const Controller = require("../controller");
 const CategoryModel = require("../../../models/Category");
 const createHttpError = require("http-errors");
 const { addCategorySchema } = require("../../validators/admin/category.schema");
+const category = require("../../../routes/admin/category");
 
 class CategoryController extends Controller {
     async addCategory(req, res, next){
@@ -25,10 +26,15 @@ class CategoryController extends Controller {
 
     async removeCategory(req, res, next){
         try{
-            
         }catch(err){
             next(err);
         };
+    }
+
+    async checkExistsCategory(id){
+        const category =  await CategoryModel.findById(id);
+        if(!category) createHttpError.NotFound("دسته بندی موردنظر برای حذف کردن پیدا نشد.");
+        return category;
     }
  
     async editCategory(req, res, next){
