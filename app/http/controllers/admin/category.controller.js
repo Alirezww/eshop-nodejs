@@ -119,7 +119,36 @@ class CategoryController extends Controller {
 
     async getCategoryByID(req, res, next){
         try{
-            
+            const { id } = req.params;
+            const category = await CategoryModel.aggregate([
+                {
+                    $match: {
+                        _id: id
+                    }
+                },
+                {
+                    $lookup:{
+                        from: "categories",
+                        localField: "_id",
+                        foreignField: "parent",
+                        as: "children"
+                    }
+                },
+                {
+                    $project: {
+                        __v: 0,
+                        "children.__v" : 0,
+                        "children.parent": 0
+                    }
+                }
+            ]);
+
+            return res.status(200).json({
+                data: {
+                    statusCode: 200,
+                    category
+                }
+            })
         }catch(err){
             next(err);
         };
