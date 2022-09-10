@@ -6,6 +6,11 @@ const addCategorySchema = Joi.object({
     parent: Joi.string().pattern(MongoIDPattern).allow("").allow('').error(new Error("شناسه ارسال شده صحیح نمی باشد."))
 });
 
+const editCategorySchema = Joi.object({
+    title: Joi.string().min(3).max(30).error(new Error("عنوان دسته بندی صحیح نمی باشد."))
+})
+
 module.exports = {
     addCategorySchema,
+    editCategorySchema
 }

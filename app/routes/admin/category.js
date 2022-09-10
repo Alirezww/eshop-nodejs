@@ -51,7 +51,7 @@ router.get("/all", CategoryController.getAllCategories);
  *              500:
  *                  description: InternalServerError
  */
- router.get("/list-all", CategoryController.getAllCategoriesWithoutPopulation);
+router.get("/list-all", CategoryController.getAllCategoriesWithoutPopulation);
 
 /**
  * @swagger

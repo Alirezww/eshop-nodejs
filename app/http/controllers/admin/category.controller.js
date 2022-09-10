@@ -23,7 +23,6 @@ class CategoryController extends Controller {
             next(err);
         };
     }
-
     async removeCategory(req, res, next){
         try{
             const { id } = req.params
@@ -47,13 +46,11 @@ class CategoryController extends Controller {
             next(err);
         };
     }
-
     async checkExistsCategory(id){
         const category =  await CategoryModel.findById(id);
         if(!category) throw createHttpError.NotFound("دسته بندی موردنظر برای حذف کردن پیدا نشد.");
         return category;
     }
- 
     async editCategory(req, res, next){
         try{
             
@@ -61,7 +58,6 @@ class CategoryController extends Controller {
             next(err);
         };
     }
-
     async getAllCategories(req, res, next){
         try{
             // const categories = await CategoryModel.aggregate([
@@ -125,7 +121,6 @@ class CategoryController extends Controller {
             next(err);
         };
     }
-
     async getAllCategoriesWithoutPopulation(req, res, next){
         try{
             const categories = await CategoryModel.aggregate([
@@ -147,7 +142,6 @@ class CategoryController extends Controller {
             next(err);
         }
     }
-
     async getCategoryByID(req, res, next){
         try{
             const { id } = req.params;
@@ -184,7 +178,6 @@ class CategoryController extends Controller {
             next(err);
         };
     }
-
     async getAllParents(req, res, next){
         try{
             const parents = await CategoryModel.find({ parent : undefined }, { __v: 0 });
@@ -199,7 +192,6 @@ class CategoryController extends Controller {
             next(err);
         };
     }
-
     async getChildOfParents(req, res, next){
         try{
             const { parent } = req.params;
