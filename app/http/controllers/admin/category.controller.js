@@ -39,7 +39,7 @@ class CategoryController extends Controller {
         };
     }
 
-    async getAllCategory(req, res, next){
+    async getAllCategories(req, res, next){
         try{
             const categories = await CategoryModel.aggregate([
                 {
@@ -48,6 +48,13 @@ class CategoryController extends Controller {
                         localField: "_id",
                         foreignField: "parent",
                         as: "children"
+                    }
+                },
+                {
+                    $project : { 
+                        __v: 0,
+                        "children.__v": 0,
+                        "children.parent" : 0
                     }
                 }
             ]);

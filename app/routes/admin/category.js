@@ -27,6 +27,20 @@ router.post("/add", CategoryController.addCategory);
 
 /**
  * @swagger
+ * /admin/category/all:
+ *      get:
+ *          summary: get all categories
+ *          tags: [Admin-Panel]
+ *          responses:
+ *              200:
+ *                  description: success
+ *              500:
+ *                  description: InternalServerError
+ */
+ router.get("/all", CategoryController.getAllCategories);
+
+/**
+ * @swagger
  * /admin/category/parents:
  *      get:
  *          summary: get all parent categories
