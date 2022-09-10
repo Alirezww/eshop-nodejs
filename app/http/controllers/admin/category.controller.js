@@ -32,7 +32,7 @@ class CategoryController extends Controller {
             const deleteResult = await CategoryModel.deleteOne({ _id : category._id });
             if(deleteResult.deletedCount == 0) throw createHttpError.InternalServerError("خطای سروری هنگام حذف دسته بندی مورد نظر رخ داد!");
 
-            return res.statsu(200).json({
+            return res.status(200).json({
                 data: {
                     statusCode: 200,
                     message: "دسته بندی موردنظر با موفقیت حذف گردید."
@@ -45,7 +45,7 @@ class CategoryController extends Controller {
 
     async checkExistsCategory(id){
         const category =  await CategoryModel.findById(id);
-        if(!category) createHttpError.NotFound("دسته بندی موردنظر برای حذف کردن پیدا نشد.");
+        if(!category) throw createHttpError.NotFound("دسته بندی موردنظر برای حذف کردن پیدا نشد.");
         return category;
     }
  
