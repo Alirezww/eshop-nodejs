@@ -37,7 +37,7 @@ router.post("/add", CategoryController.addCategory);
  *              500:
  *                  description: InternalServerError
  */
- router.get("/all", CategoryController.getAllCategories);
+router.get("/all", CategoryController.getAllCategories);
 
 /**
  * @swagger
@@ -52,6 +52,25 @@ router.post("/add", CategoryController.addCategory);
  *                  description: InternalServerError
  */
 router.get("/parents", CategoryController.getAllParents);
+
+/**
+ * @swagger
+ * /admin/category/{id}:
+ *      get:
+ *          summary: get category by id
+ *          tags: [Admin-Panel]
+ *          parameters:
+ *              -   in: path
+ *                  name: id
+ *                  required: true
+ *                  type: string
+ *          responses:
+ *              200:
+ *                  description: success
+ *              500:
+ *                  description: InternalServerError
+ */
+router.get("/:id", CategoryController.getCategoryByID);
 
 /**
  * @swagger
@@ -70,7 +89,7 @@ router.get("/parents", CategoryController.getAllParents);
  *              500:
  *                  description: InternalServerError
  */
- router.get("/children/:parent", CategoryController.getChildOfParents);
+router.get("/children/:parent", CategoryController.getChildOfParents);
 
  /**
  * @swagger
@@ -89,7 +108,7 @@ router.get("/parents", CategoryController.getAllParents);
  *              500:
  *                  description: InternalServerError
  */
-  router.delete("/remove/:id", CategoryController.removeCategory);
+router.delete("/remove/:id", CategoryController.removeCategory);
 
 module.exports = {
     CategoryRoutes : router

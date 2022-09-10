@@ -122,12 +122,12 @@ class CategoryController extends Controller {
             const { id } = req.params;
             const category = await CategoryModel.aggregate([
                 {
-                    $match: {
-                        _id: id
+                    $match : {
+                        _id : id
                     }
                 },
                 {
-                    $lookup:{
+                    $lookup : {
                         from: "categories",
                         localField: "_id",
                         foreignField: "parent",
@@ -135,10 +135,10 @@ class CategoryController extends Controller {
                     }
                 },
                 {
-                    $project: {
+                    $project : { 
                         __v: 0,
-                        "children.__v" : 0,
-                        "children.parent": 0
+                        "children.__v": 0,
+                        "children.parent" : 0
                     }
                 }
             ]);
