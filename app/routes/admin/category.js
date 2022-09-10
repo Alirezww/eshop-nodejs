@@ -72,6 +72,25 @@ router.get("/parents", CategoryController.getAllParents);
  */
  router.get("/children/:parent", CategoryController.getChildOfParents);
 
+ /**
+ * @swagger
+ * /admin/category/remove/{id}:
+ *      get:
+ *          summary: remove category by id
+ *          tags: [Admin-Panel]
+ *          parameters:
+ *              -   in: path
+ *                  name: id
+ *                  type: string
+ *                  required: true
+ *          responses:
+ *              200:
+ *                  description: success
+ *              500:
+ *                  description: InternalServerError
+ */
+  router.get("/remove/:id", CategoryController.removeCategory);
+
 module.exports = {
     CategoryRoutes : router
 }
