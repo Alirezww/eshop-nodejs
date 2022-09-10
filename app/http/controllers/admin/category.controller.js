@@ -122,9 +122,27 @@ class CategoryController extends Controller {
                 }
             })
         }catch(err){
-            console.log(err)
             next(err);
         };
+    }
+
+    async getAllCategoriesWithoutPopulation(req, res, next){
+        try{
+            const categories = await CategoryModel.aggregate([
+                {
+                    $match: {}
+                }
+            ]);
+
+            return res.status(200).json({
+                data: {
+                    statusCode: 200,
+                    categories
+                }
+            })
+        }catch(err){
+            next(err);
+        }
     }
 
     async getCategoryByID(req, res, next){
@@ -170,6 +188,7 @@ class CategoryController extends Controller {
 
             return res.status(200).json({
                 data:{
+                    statusCode: 200,
                     parents
                 }
             })
@@ -186,6 +205,7 @@ class CategoryController extends Controller {
 
             return res.status(200).json({
                 data: {
+                    statusCode: 200,
                     children
                 }
             })
