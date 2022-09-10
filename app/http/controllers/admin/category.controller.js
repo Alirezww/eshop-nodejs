@@ -1,10 +1,12 @@
 const Controller = require("../controller");
 const CategoryModel = require("../../../models/Category");
 const createHttpError = require("http-errors");
+const { addCategorySchema } = require("../../validators/admin/category.schema");
 
 class CategoryController extends Controller {
     async addCategory(req, res, next){
         try{
+            await addCategorySchema.validateAsync(req.body);
             const { title, parent } = req.body;
 
             const category = await CategoryModel.create({ title, parent });
