@@ -2,6 +2,7 @@ const Controller = require("../controller");
 const CategoryModel = require("../../../models/Category");
 const createHttpError = require("http-errors");
 const { addCategorySchema } = require("../../validators/admin/category.schema");
+const { default: mongoose } = require("mongoose");
 
 class CategoryController extends Controller {
     async addCategory(req, res, next){
@@ -28,7 +29,12 @@ class CategoryController extends Controller {
             const { id } = req.params
             const category = await this.checkExistsCategory(id);
 
-            const deleteResult = await CategoryModel.deleteOne({ _id : category._id });
+            const deleteResult = await CategoryModel.deleteMany({ 
+                $or: [
+                    { _id : category._id },
+                    { parent: category._id }
+                ]
+            });
             if(deleteResult.deletedCount == 0) throw createHttpError.InternalServerError("خطای سروری هنگام حذف دسته بندی مورد نظر رخ داد!");
 
             return res.status(200).json({
@@ -123,7 +129,7 @@ class CategoryController extends Controller {
             const category = await CategoryModel.aggregate([
                 {
                     $match : {
-                        _id : id
+                        _id : mongoose.Types.ObjectId(id)
                     }
                 },
                 {
