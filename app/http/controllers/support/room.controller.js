@@ -9,7 +9,7 @@ class RoomController extends Controller{
             const { name, description, filename, fileUploadPath, namespace } = req.body;
 
             await this.findNamespaceByEndpoint(namespace)
-            await this.findRoomByName(name);
+            await this.findRoomByNameInNamespace(name, namespace);
 
             const image = path.join(fileUploadPath, filename).replace(/\\/g, "/");
             const room = { image, name, description };
@@ -45,8 +45,8 @@ class RoomController extends Controller{
         }
     }
 
-    async findRoomByName(name){
-        const room = await ConversationModel.findOne({ "rooms.name" : name });
+    async findRoomByNameInNamespace(name, namespace){
+        const room = await ConversationModel.findOne({ endpoint : namespace ,"rooms.name" : name });
         if(room) throw createHttpError.BadRequest("این نام قبلا استفاده شده است.");
     }
     
