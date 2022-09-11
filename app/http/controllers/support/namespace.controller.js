@@ -7,6 +7,7 @@ class NamespaceController extends Controller{
     async addNemespace(req, res, next){
         try{
             const { title, endpoint } = req.body;
+            await this.findNamespaceByEndpoint(endpoint);
             const conversation = await ConversationModel.create({ title, endpoint });
             if(!conversation) throw createHttpError.InternalServerError("خطایی سمت سرور رخ داده است. لطفا بعدا امتحان کنید.");
             return res.status(200).json({
@@ -33,6 +34,11 @@ class NamespaceController extends Controller{
         }catch(err){
             next(err);
         }
+    }
+
+    async findNamespaceByEndpoint(endpoint){
+        const namespace = await ConversationModel.findOne({ endpoint });
+        if(namespace) throw createHttpError.BadRequest("این اسم قبلا انتخاب شده است.");
     }
 
 }
