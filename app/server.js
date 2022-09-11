@@ -6,6 +6,7 @@ const createError = require("http-errors");
 const swaggerUI = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
 const cors = require("cors");
+const expressEjsLayout = require("express-ejs-layouts");
 
 const { AllRoutes } = require("./routes/router");
 
@@ -19,6 +20,7 @@ class Application {
         this.#PORT = PORT;
         
         this.configApplication();
+        this.initTemplateEngine();
         this.connectToMongoDB();
         this.initRedis();
         this.createRoutes();
@@ -81,6 +83,14 @@ class Application {
 
     createRoutes(){
         this.#app.use(AllRoutes);
+    }
+
+    initTemplateEngine(){
+        this.#app.use(expressEjsLayout);
+        this.#app.set("view engine", "ejs");
+        this.#app.set("views", "resource/views");
+        this.#app.set("layout extractStyles", true);
+        this.#app.set("layout extractScripts", true);
     }
 
     createServer(){
