@@ -9,6 +9,7 @@ const cors = require("cors");
 const expressEjsLayout = require("express-ejs-layouts");
 
 const { AllRoutes } = require("./routes/router");
+const { initialSocket } = require("./utils/initSocket");
 
 class Application {
     #app = express();
@@ -102,10 +103,13 @@ class Application {
         this.#app.set("layout extractStyles", true);
         this.#app.set("layout extractScripts", true);
         this.#app.set("layout", "./layouts/master");
-      }
+    }
+
     createServer(){
         const http = require("http");
-        http.createServer(this.#app).listen(this.#PORT, () => {
+        const server =  http.createServer(this.#app);
+        const io = initialSocket(server);
+        server.listen(this.#PORT, () => {
             console.log(`The server is running on localhost in port ${this.#PORT}`)
         })
     }
