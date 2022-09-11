@@ -1,6 +1,6 @@
 const createHttpError = require("http-errors");
 const { ConversationModel } = require("../../../models/conversation");
-const Controller = require("./../controller");
+const Controller = require("../controller");
 
 class NamespaceController extends Controller{
 
