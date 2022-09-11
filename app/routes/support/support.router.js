@@ -4,6 +4,13 @@ const { ApiRoomRouter } = require("./room.router");
 
 const router = require("express").Router();
 
+/**
+ * @swagger
+ * tags:
+ *      -   name: Support
+ *          description: actions of admin (add, edit, remove, read)
+ */
+
 router.use("/room", ApiRoomRouter);
 router.use("/namespace", ApiNamespaeRouter);
 router.get("/", SupportController.renderChatRoom);
