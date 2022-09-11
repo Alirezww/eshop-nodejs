@@ -13,6 +13,15 @@ class NamespaceSocketHandler{
         })
     }
 
+    async createNamespacesConnection(){
+        const namespaces = await ConversationModel.find({}).sort({ _id: 1 });
+        for (const namespace of namespaces) {
+            this.#io.of(`/${namespace.endpoint}`).on("connection", socket => {
+                socket.emit("roomsList", namespace.rooms)
+            })
+        }
+    }
+
 }
 
 module.exports = NamespaceSocketHandler;
