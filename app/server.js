@@ -33,7 +33,7 @@ class Application {
         this.#app.use(morgan("dev"));
         this.#app.use(express.json({  }));
         this.#app.use(express.urlencoded({ extended : false }));
-        this.#app.use(express.static(path.join(__dirname, "..",  "public")));
+        this.#app.use(express.static(path.join(__dirname, "..", "public")));
         
         this.#app.use("/api-doc", swaggerUI.serve, swaggerUI.setup(swaggerJSDoc({
             swaggerDefinition : {
@@ -86,14 +86,13 @@ class Application {
     }
 
     initTemplateEngine(){
-        this.#app.use(expressEjsLayout);
+        this.#app.use(expressEjsLayout)
         this.#app.set("view engine", "ejs");
         this.#app.set("views", "resource/views");
         this.#app.set("layout extractStyles", true);
         this.#app.set("layout extractScripts", true);
-        this.#app.set("layout", "./layouts/master")
-    }
-
+        this.#app.set("layout", "./layouts/master");
+      }
     createServer(){
         const http = require("http");
         http.createServer(this.#app).listen(this.#PORT, () => {
