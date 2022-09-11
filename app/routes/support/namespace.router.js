@@ -2,9 +2,9 @@ const { NamespaceController } = require("../../http/controllers/support/namespac
 
 const router = require("express").Router();
 
-router.get("/add", NamespaceController.addNemespace);
+router.post("/add", NamespaceController.addNemespace);
 router.get("/list", NamespaceController.getListOfNamespaces);
 
 module.exports = {
-    NamespaceSection : router
+    ApiNamespaeRouter : router
 };
