@@ -1,3 +1,5 @@
+const { ConversationModel } = require("../models/Conversation");
+
 class NamespaceSocketHandler{
     #io;
     constructor(io){
@@ -5,8 +7,9 @@ class NamespaceSocketHandler{
     };
 
     initConnection(){
-        this.#io.on("connection", (socket) => {
-            console.log(socket.rooms)
+        this.#io.on("connection", async socket => {
+            const namespaces = await ConversationModel.find( {}, { title:1, endpoint:1 }).sort({ _id: 1 });
+            socket.emit("namespacesList", namespaces);
         })
     }
 
