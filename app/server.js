@@ -10,6 +10,7 @@ const expressEjsLayout = require("express-ejs-layouts");
 
 const { AllRoutes } = require("./routes/router");
 const { initialSocket } = require("./utils/initSocket");
+const { socketHandler } = require("./socket.io");
 
 class Application {
     #app = express();
@@ -109,6 +110,7 @@ class Application {
         const http = require("http");
         const server =  http.createServer(this.#app);
         const io = initialSocket(server);
+        socketHandler(io);
         server.listen(this.#PORT, () => {
             console.log(`The server is running on localhost in port ${this.#PORT}`)
         })
