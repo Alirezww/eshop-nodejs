@@ -10,11 +10,26 @@ class NamespaceController extends Controller{
             const conversation = await ConversationModel.create({ title, endpoint });
             if(!conversation) throw createHttpError.InternalServerError("خطایی سمت سرور رخ داده است. لطفا بعدا امتحان کنید.");
             return res.status(200).json({
+                statusCode: 200,
                 data: {
-                    statusCode: 200,
-                    message: "فضای نام جدیدی با موفقیت ایجاد شده است."
+                    message: "فضای مکالمه جدیدی با موفقیت ایجاد شده است."
                 }
             });
+        }catch(err){
+            next(err);
+        }
+    };
+
+    async getListOfNamespaces(req, res, next){
+        try{
+            const namespaces = await ConversationModel.find({}, { rooms:0 });
+            if(!namespaces) throw createHttpError.InternalServerError("خطایی سمت سرور رخ داده است.");
+            return res.status(200).json({
+                statusCode: 200,
+                data:{
+                    namespaces
+                }
+            })
         }catch(err){
             next(err);
         }
