@@ -47,12 +47,12 @@ class RoomController extends Controller{
 
     async findRoomByName(name){
         const room = await ConversationModel.findOne({ "rooms.name" : name });
-        if(!room) throw createHttpError.BadRequest("این نام قبلا استفاده شده است.");
+        if(room) throw createHttpError.BadRequest("این نام قبلا استفاده شده است.");
     }
     
     async findNamespaceByEndpoint(endpoint){
         const namespace = await ConversationModel.findOne({ endpoint });
-        if(namespace) throw createHttpError.BadRequest("فضای مکالمه ای یافت نشد!");
+        if(!namespace) throw createHttpError.BadRequest("فضای مکالمه ای یافت نشد!");
         return namespace;
     }
 }
