@@ -91,6 +91,7 @@ class Application {
         this.#app.set("views", "resource/views");
         this.#app.set("layout extractStyles", true);
         this.#app.set("layout extractScripts", true);
+        this.#app.set("layout", "./layouts/master")
     }
 
     createServer(){
