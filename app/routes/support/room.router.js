@@ -14,19 +14,19 @@ const router = require("express").Router();
 *                    type: string
 *                    in: formData
 *                    required: true
-*                    description: the title of category
+*                    description: the title of room
 *               
 *               -    name: description
 *                    type: string
 *                    in: formData
 *                    required: true
-*                    description: the description of text of blog
+*                    description: the description of text of room
 *               
 *               -    name: image
 *                    type: file
 *                    in: formData
 *                    required: true
-*                    description: the index picture of blog
+*                    description: the index picture of room
 *               
 *               -    name: namespace
 *                    type: string
